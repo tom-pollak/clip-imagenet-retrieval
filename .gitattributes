@@ -1,0 +1,14 @@
+*.pt filter=lfs diff=lfs merge=lfs -text
+clip_index/model/motis/final_text_encoder_4.pt filter=lfs diff=lfs merge=lfs -text
+clip_index/model/motis/final_visual.pt filter=lfs diff=lfs merge=lfs -text
+/clip_index/model/final_text_encoder_4.pt filter=lfs diff=lfs merge=lfs -text
+/assets/imagewise_ann_queries_max_results_all_indexes.pkl filter=lfs diff=lfs merge=lfs -text
+assets/imagewise_ann_queries_top5_repl.pkl filter=lfs diff=lfs merge=lfs -text
+assets/max_results_res_512.pkl filter=lfs diff=lfs merge=lfs -text
+assets/max_results_res_1024.pkl filter=lfs diff=lfs merge=lfs -text
+assets/querywise_ann_queries_top5.pkl filter=lfs diff=lfs merge=lfs -text
+assets/temp_512_rerun.pkl filter=lfs diff=lfs merge=lfs -text
+assets/imagenet_data_querywise_512.pkl filter=lfs diff=lfs merge=lfs -text
+assets/imagewise_ann_queries_top5.pkl filter=lfs diff=lfs merge=lfs -text
+assets/image_embeddings.pt filter=lfs diff=lfs merge=lfs -text
+assets/query_embeddings.pt filter=lfs diff=lfs merge=lfs -text

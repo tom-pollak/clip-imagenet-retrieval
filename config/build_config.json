@@ -1,0 +1,11 @@
+{
+  "sqlite_path": "/Users/tom/projects/clip-index/clip_image.db",
+  "mode": "build",
+  "image_dir": "/Users/tom/projects/clip-index/assets/ILSVRC/Data/DET/test",
+  "index_folder": "/Users/tom/projects/clip-index/assets/indexes/openclip-vit-b-32-quickgelu",
+  "index_size": 1024,
+  "ntrees": 1024,
+  "search_k": -1,
+  "model_name": "openclip:ViT-B-32-quickgelu",
+  "pretrained": "laion400m_e32"
+}

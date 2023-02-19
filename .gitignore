@@ -1,0 +1,17 @@
+native-venv
+docker-venv
+__pycache__
+.DS_Store
+.idea
+*.bak
+imagenet12
+imagenet-indexes
+.ipynb_checkpoints
+ILSVRC
+*venv*
+*.ann
+*.db
+clip_index/model/
+.vscode
+.envrc
+.pytest_cache

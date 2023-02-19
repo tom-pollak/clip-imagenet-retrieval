@@ -1,0 +1,11 @@
+{
+  "sqlite_path": "/Users/tom/projects/clip-index/clip_image.db",
+  "mode": "query",
+  "queries": ["a photo of a man wearing sunglasses"],
+  "max_results_per_query": 20,
+  "max_results_demo": 20,
+  "threshold": 1.08,
+  "index_folder": "/Volumes/T7/CLIP-indexes/motis-128/val/",
+  "search_k": -1,
+  "model_name": "motis"
+}

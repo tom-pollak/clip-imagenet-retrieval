@@ -1,0 +1,10 @@
+{
+  "sqlite_path": "/Users/tom/projects/clip-index/clip_image.db",
+  "mode": "build",
+  "image_dir": "/Volumes/T7/ILSVRC/Data/DET/val",
+  "index_folder": "/Volumes/T7/CLIP-indexes/motis-128/val/",
+  "index_size": 128,
+  "ntrees": 1024,
+  "search_k": -1,
+  "model_name": "motis"
+}
