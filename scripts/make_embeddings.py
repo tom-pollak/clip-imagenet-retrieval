@@ -13,10 +13,10 @@ image_dir = Path("/Volumes/T7/ILSVRC/Data/DET/val")
 img_paths = [str(image_dir / file) for file in os.listdir(image_dir)]
 
 #%%
-from clip_index.utils.config import BuildCfg
+from clip_index.utils.config import AnnoyBuildCfg
 
 config = {"model_name": "motis"}
-cfg = BuildCfg.from_dict(config)
+cfg = AnnoyBuildCfg.from_dict(config)
 model = cfg.load_model()
 
 
@@ -43,9 +43,9 @@ queries = [cls for cls in dataset._synset2desc.values()]
 
 #%%
 from clip_index.text.query import create_query_embeddings
-from clip_index.utils.config import QueryCfg
+from clip_index.utils.config import AnnoyQueryCfg
 
-cfg = QueryCfg()
+cfg = AnnoyQueryCfg()
 model = cfg.load_model()
 
 query_embeddings = create_query_embeddings(model, queries)

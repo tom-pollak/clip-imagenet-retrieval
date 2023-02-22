@@ -10,7 +10,7 @@ import torch
 from clip_index.imagenet import ImagenetDETDataset
 from clip_index.text.query import AnnoyImage
 from clip_index.utils import create_index
-from clip_index.utils.config import QueryCfg
+from clip_index.utils.config import AnnoyQueryCfg
 
 sys.path.append("..")
 
@@ -94,7 +94,7 @@ def query_index(
     index_queries: IndexQueries,
     index_paths: list[str],
     index_size: int,
-    cfg: QueryCfg,
+    cfg: AnnoyQueryCfg,
 ) -> IndexQueries:
     """
     Queries indeses at index_paths and updates index_queries in-place
@@ -159,7 +159,7 @@ def query_index(
 def evaluate_queries(
     index_query_cls: Callable,
     index_folders: list[Path],
-    cfg: QueryCfg = QueryCfg(),
+    cfg: AnnoyQueryCfg = AnnoyQueryCfg(),
 ) -> dict[int, ImagewiseResult | QuerywiseResult]:
     print("Evaluating queries, max results per query:", cfg.max_results_per_query)
     result = {}

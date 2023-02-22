@@ -17,18 +17,16 @@ def parse_args() -> argparse.Namespace:
 
 
 def run_build(config: dict):
-    from clip_index.image.build import build_indexes_from_imgs
-    from clip_index.utils.config import BuildCfg
+    from clip_index.image.build import build_indexes_from_image_folder
+    from clip_index.utils.config import AnnoyBuildCfg
 
     print("Starting index build")
     assert config.get("image_dir", False), "Please give image_dir in config"
     assert config.get("index_folder", False), "Please give index_folder in config"
     conn = sqlite3.connect(config["sqlite_path"])
     start_time = time()
-    cfg = BuildCfg.from_dict(config)
-    model = cfg.load_model()
-    build_indexes_from_imgs(
-        model=model,
+    cfg = AnnoyBuildCfg.from_dict(config)
+    build_indexes_from_image_folder(
         image_dir=Path(config["image_dir"]),
         index_folder=Path(config["index_folder"]),
         conn=conn,
@@ -40,7 +38,7 @@ def run_build(config: dict):
 
 def run_query(config: dict):
     from clip_index.text.query import filter_closest_n_results, query_index
-    from clip_index.utils.config import QueryCfg
+    from clip_index.utils.config import AnnoyQueryCfg
     from clip_index.utils.demo import demo_images
 
     print("Querying index folder...")
@@ -49,7 +47,7 @@ def run_query(config: dict):
     assert config.get("queries", False), "Please give queries in config"
     conn = sqlite3.connect(config["sqlite_path"])
     cur = conn.cursor()
-    cfg = QueryCfg.from_dict(config)
+    cfg = AnnoyQueryCfg.from_dict(config)
     annoy_queries = query_index(
         queries=config["queries"],
         index_folder=Path(config["index_folder"]),

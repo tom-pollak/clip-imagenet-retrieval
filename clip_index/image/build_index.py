@@ -5,7 +5,6 @@ import numpy as np
 import torch
 from annoy import AnnoyIndex
 from PIL import Image
-from tensorflow.python import image
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
 
 try:

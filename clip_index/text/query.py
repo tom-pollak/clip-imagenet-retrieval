@@ -7,8 +7,7 @@ from typing import TypeAlias
 import torch
 from annoy import AnnoyIndex
 
-from clip_index.utils import create_index
-from clip_index.utils.config import QueryCfg
+from clip_index.utils.config import AnnoyQueryCfg
 
 from .simple_tokenizer import tokenize
 
@@ -32,10 +31,7 @@ class AnnoyImage:
         same_image: bool = (
             self.image_id == item.image_id
             or self.image_path == item.image_path
-            or (
-                self.index_id == item.index_id
-                and self.ref_id == item.ref_id
-            )
+            or (self.index_id == item.index_id and self.ref_id == item.ref_id)
         )
         same_query: bool = self.query == item.query
         return same_image and same_query
@@ -72,39 +68,29 @@ def query_index(
     index_folder: Path,
     queries: list[str],
     cur: sqlite3.Cursor | None = None,
-    cfg: QueryCfg = QueryCfg(),
+    cfg: AnnoyQueryCfg = AnnoyQueryCfg(),
 ) -> AnnoyQueries:
-    encoded_text = create_query_embeddings(cfg.load_model(), queries)
     assert index_folder.exists()
-    index = create_index()
+    encoded_text = create_query_embeddings(cfg.load_model(), queries)
+    index = cfg.load_index()
     index_paths = [
-        str(index_folder / file)
+        index_folder / file
         for file in os.listdir(index_folder)
         if file.endswith(".ann")
     ]
+
     ann_queries: AnnoyQueries = {q: [] for q in queries}
     for path in index_paths:
-        index_id = int(Path(path).stem)
+        index_id = int(path.stem)
         index.load(path)
-        for q, q_emb in zip(queries, encoded_text):
-            index_ref_ids, distances = index.get_nns_by_vector(
-                q_emb,  # pyright: reportGeneralTypeIssues=false
-                cfg.max_results_per_query,
-                include_distances=True,
-                search_k=cfg.search_k,
-            )
-            for ref_id, dist in zip(index_ref_ids, distances):
-                if dist > cfg.threshold:
-                    continue
-                ann_img = AnnoyImage(
-                    query=q, ref_id=ref_id, index_id=index_id, dist=dist
-                )
-                ann_queries[q].append(ann_img)
+        for q, qemb in zip(queries, encoded_text):
+            ann_imgs = index.query(q, qemb, cfg, index_id)
+            ann_queries[q] += ann_imgs
+        index.unload()
 
         if cur is not None:
             for ann_imgs in ann_queries.values():
                 add_image_path(cur, ann_imgs)
-        index.unload()
     return ann_queries
 
 

@@ -142,7 +142,7 @@ from query_res import (
     result_to_dict,
 )
 
-from clip_index import QueryCfg
+from clip_index import AnnoyQueryCfg
 
 index_sizes = [16, 64, 128, 512, 1024, 4096, 8192, 20120]
 max_results = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
@@ -156,7 +156,7 @@ print("Creating imagewise results...")
 max_results_res: dict[int, dict] = {}
 for max_result in max_results:
     res = evaluate_queries(
-        ImagewiseResult, index_folders, QueryCfg(max_results_per_query=max_result)
+        ImagewiseResult, index_folders, AnnoyQueryCfg(max_results_per_query=max_result)
     )
     res_dict = result_to_dict(res)
     max_results_res[max_result] = res_dict
@@ -168,7 +168,7 @@ print(f"Saved to {max_results_path}\n")
 # %%
 print("Creating querywise results...")
 res = evaluate_queries(
-    QuerywiseResult, index_folders, QueryCfg(max_results_per_query=5)
+    QuerywiseResult, index_folders, AnnoyQueryCfg(max_results_per_query=5)
 )
 res_dict = result_to_dict(res)
 
