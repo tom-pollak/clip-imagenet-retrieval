@@ -8,9 +8,9 @@ from typing import Callable
 import torch
 
 from clip_index.imagenet import ImagenetDETDataset
-from clip_index.text.query import AnnoyImage
+from clip_index.utils import AnnoyImage
 from clip_index.utils import create_index
-from clip_index.utils.config import AnnoyQueryCfg
+from clip_index.config import AnnoyQueryCfg
 
 sys.path.append("..")
 

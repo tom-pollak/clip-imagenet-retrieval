@@ -4,12 +4,11 @@ from pathlib import Path
 from time import time
 
 # from annoy import AnnoyIndex
-from clip_index.index import AnnoyIndex
 from tqdm.auto import trange
 
 from clip_index.image.build_db import get_image_ids, get_next_table_id, insert_images_db
-from clip_index.image.build_index import add_images_to_index, create_image_embeddings
-from clip_index.utils.config import AnnoyBuildCfg, BuildCfg
+from clip_index.image.build_index import create_image_embeddings
+from clip_index.config import BuildCfg
 
 
 def build_indexes_from_image_folder(

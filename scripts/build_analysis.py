@@ -142,7 +142,7 @@ from query_res import (
     result_to_dict,
 )
 
-from clip_index import AnnoyQueryCfg
+from clip_index.annoy import AnnoyQueryCfg
 
 index_sizes = [16, 64, 128, 512, 1024, 4096, 8192, 20120]
 max_results = [1, 5, 10, 20, 50, 100, 200, 500, 1000]

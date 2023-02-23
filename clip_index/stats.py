@@ -1,5 +1,5 @@
 from typing import Iterable
-from clip_index.text.query import AnnoyImage
+from clip_index.annoy import AnnoyImage
 
 
 class QueryStats:

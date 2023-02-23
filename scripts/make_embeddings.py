@@ -13,7 +13,7 @@ image_dir = Path("/Volumes/T7/ILSVRC/Data/DET/val")
 img_paths = [str(image_dir / file) for file in os.listdir(image_dir)]
 
 #%%
-from clip_index.utils.config import AnnoyBuildCfg
+from clip_index.annoy import AnnoyBuildCfg
 
 config = {"model_name": "motis"}
 cfg = AnnoyBuildCfg.from_dict(config)
@@ -21,7 +21,8 @@ model = cfg.load_model()
 
 
 #%%
-from clip_index import create_image_embeddings
+
+from clip_index.image.build import create_image_embeddings
 
 start_time = time()
 image_embeddings = create_image_embeddings(model, img_paths)
@@ -43,7 +44,7 @@ queries = [cls for cls in dataset._synset2desc.values()]
 
 #%%
 from clip_index.text.query import create_query_embeddings
-from clip_index.utils.config import AnnoyQueryCfg
+from clip_index.annoy import AnnoyQueryCfg
 
 cfg = AnnoyQueryCfg()
 model = cfg.load_model()

@@ -7,11 +7,11 @@ import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from PIL import Image
+from clip_index.annoy import AnnoyQueries
+from clip_index.index import AnnQueries
 
-from clip_index.text.query import AnnoyQueries
 
-
-def demo_images(query_image_dict: AnnoyQueries):
+def demo_images(query_image_dict: AnnQueries | AnnoyQueries):
     for query, images in query_image_dict.items():
         for im in images:
             assert (

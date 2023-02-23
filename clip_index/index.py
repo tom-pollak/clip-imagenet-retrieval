@@ -1,24 +1,43 @@
+from dataclasses import dataclass
 from pathlib import Path
-import annoy
 from abc import ABC, abstractmethod
+from typing import TypeAlias
 import torch
 
-from clip_index.text.query import AnnoyImage
-from clip_index.utils.config import (
-    AnnoyBuildCfg,
-    AnnoyCfg,
-    BaseCfg,
-    BuildCfg,
-    QueryCfg,
-    AnnoyQueryCfg,
-)
+import clip_index.config as config
+
+
+@dataclass
+class AnnImage(ABC):
+    query: str | None
+    dist: float
+    image_id: int | None = None
+    image_path: Path | None = None
+    imagenet_classes: set[str] | None = None
+
+    def add_image_data(self, imid: int, path: str):
+        self.image_id = imid
+        self.image_path = Path(path)
+        assert self.image_path.exists()
+
+    def __eq__(self, item) -> bool:
+        same_image: bool = (
+            self.image_id == item.image_id
+            or self.image_path == item.image_path
+            # or (self.index_id == item.index_id and self.ref_id == item.ref_id)
+        )
+        same_query: bool = self.query == item.query
+        return same_image and same_query
+
+
+AnnQueries: TypeAlias = dict[str, list[AnnImage]]
 
 
 class AnnIndex(ABC):
     @abstractmethod
     def __init__(
         self,
-        cfg: BaseCfg,
+        cfg: config.BaseCfg,
     ):
         ...
 
@@ -27,7 +46,7 @@ class AnnIndex(ABC):
         ...
 
     @abstractmethod
-    def build(self, path: Path, build_cfg: BuildCfg):
+    def build(self, path: Path, build_cfg: config.BuildCfg):
         ...
 
     @abstractmethod
@@ -35,9 +54,9 @@ class AnnIndex(ABC):
         self,
         query: str,
         qemb: torch.Tensor,
-        query_cfg: QueryCfg,
+        query_cfg: config.QueryCfg,
         index_id: int | None = None,
-    ) -> list[AnnoyImage]:
+    ) -> list[AnnImage]:
         ...
 
     @abstractmethod
@@ -47,63 +66,3 @@ class AnnIndex(ABC):
     @abstractmethod
     def load(self, path: Path):
         ...
-
-
-class AnnoyIndex(AnnIndex):
-    def __init__(
-        self,
-        cfg: AnnoyCfg,
-    ):
-        self._cfg = cfg
-        self._index = annoy.AnnoyIndex(
-            self._cfg.dimension, metric=self._cfg.dist_metric
-        )
-
-    def add_items(self, tensors: list[torch.Tensor]):
-        for i, t in enumerate(tensors):
-            assert (
-                self._cfg.dimension == t.shape[0]
-            ), f"Incompatiable data shape: needed: {self._cfg.dimension}, found: {t.shape}"
-            self._index.add_item(i, t)  # pyright: reportGeneralTypeIssues=false
-
-    def load(self, path: Path):
-        assert path.exists(), f"Index path does not exist: {path}"
-        self._index.load(str(path))
-
-    def unload(self):
-        self._index.unload()
-
-    def build(self, path: Path, build_cfg: AnnoyBuildCfg):
-        assert not path.exists(), f"Index path already exists: {path}"
-        self._index.on_disk_build(str(path))
-
-        if build_cfg.ntrees is None:
-            ntrees = self._index.f * 2  # 512 * 2
-        else:
-            ntrees = build_cfg.ntrees
-
-        self._index.build(ntrees)
-
-    def query(
-        self,
-        query: str,
-        qemb: torch.Tensor,
-        query_cfg: AnnoyQueryCfg,
-        index_id: int | None = None,
-    ) -> list[AnnoyImage]:
-        indices, distances = self._index.get_nns_by_vector(
-            qemb.tolist(),
-            query_cfg.max_results_per_query,
-            search_k=query_cfg.search_k,
-            include_distances=True,
-        )
-        return [
-            AnnoyImage(
-                query=query,
-                index_id=index_id,
-                ref_id=i,
-                dist=d,
-            )
-            for i, d in zip(indices, distances)
-            if d <= query_cfg.threshold
-        ]

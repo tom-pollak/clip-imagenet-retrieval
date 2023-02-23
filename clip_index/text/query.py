@@ -2,42 +2,15 @@ import os
 import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TypeAlias
 
 import torch
 from annoy import AnnoyIndex
 
-from clip_index.utils.config import AnnoyQueryCfg
+from clip_index import config
+from clip_index.annoy import AnnoyImage, AnnoyQueries
+from clip_index import index
 
 from .simple_tokenizer import tokenize
-
-
-@dataclass
-class AnnoyImage:
-    query: str | None
-    dist: float
-    ref_id: int
-    index_id: int | None = None
-    image_id: int | None = None
-    image_path: Path | None = None
-    imagenet_classes: set[str] | None = None
-
-    def add_image_data(self, imid: int, path: str):
-        self.image_id = imid
-        self.image_path = Path(path)
-        assert self.image_path.exists()
-
-    def __eq__(self, item) -> bool:
-        same_image: bool = (
-            self.image_id == item.image_id
-            or self.image_path == item.image_path
-            or (self.index_id == item.index_id and self.ref_id == item.ref_id)
-        )
-        same_query: bool = self.query == item.query
-        return same_image and same_query
-
-
-AnnoyQueries: TypeAlias = dict[str, list[AnnoyImage]]
 
 
 def add_image_path(cur: sqlite3.Cursor, annoy_images: list[AnnoyImage]):
@@ -65,10 +38,10 @@ def create_query_embeddings(model, queries: list[str]) -> torch.Tensor:
 
 
 def query_index(
-    index_folder: Path,
     queries: list[str],
+    index_folder: Path,
+    cfg: config.QueryCfg,
     cur: sqlite3.Cursor | None = None,
-    cfg: AnnoyQueryCfg = AnnoyQueryCfg(),
 ) -> AnnoyQueries:
     assert index_folder.exists()
     encoded_text = create_query_embeddings(cfg.load_model(), queries)

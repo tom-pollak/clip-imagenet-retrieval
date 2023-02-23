@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Literal
 
-from clip_index.text.query import AnnoyImage
+from clip_index.annoy import AnnoyImage
 
 
 class ImagenetDETDataset:

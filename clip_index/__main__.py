@@ -18,7 +18,7 @@ def parse_args() -> argparse.Namespace:
 
 def run_build(config: dict):
     from clip_index.image.build import build_indexes_from_image_folder
-    from clip_index.utils.config import AnnoyBuildCfg
+    from clip_index.annoy import AnnoyBuildCfg
 
     print("Starting index build")
     assert config.get("image_dir", False), "Please give image_dir in config"
@@ -38,8 +38,8 @@ def run_build(config: dict):
 
 def run_query(config: dict):
     from clip_index.text.query import filter_closest_n_results, query_index
-    from clip_index.utils.config import AnnoyQueryCfg
-    from clip_index.utils.demo import demo_images
+    from clip_index.demo import demo_images
+    from clip_index.annoy import AnnoyQueryCfg
 
     print("Querying index folder...")
     start_time = time()
@@ -51,8 +51,8 @@ def run_query(config: dict):
     annoy_queries = query_index(
         queries=config["queries"],
         index_folder=Path(config["index_folder"]),
-        cur=cur,
         cfg=cfg,
+        cur=cur,
     )
     conn.close()
 
