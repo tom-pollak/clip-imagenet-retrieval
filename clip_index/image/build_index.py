@@ -57,12 +57,12 @@ def add_images_to_index(
     """
     for i, img in enumerate(image_embeddings):
         assert img.shape[0] == index.f, f"Incompatiable data shape {img.shape}"
-        index.add_item(i, img)  # pyright: reportGeneralTypeIssues=false
+        index.add_item(i, img)  # pyright: ignore
 
 
 def create_image_embeddings(
     model, image_paths: list[str], input_resolution=224, embedding_size=512
-) -> list[torch.Tensor]:
+) -> torch.Tensor:
     preprocessor = _transform(input_resolution)
     image_embeddings = torch.empty((len(image_paths), embedding_size))
     for i, path in enumerate(image_paths):

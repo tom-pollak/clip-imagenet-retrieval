@@ -8,7 +8,7 @@ from annoy import AnnoyIndex
 
 from clip_index import config
 from clip_index.annoy import AnnoyImage, AnnoyQueries
-from clip_index import index
+from clip_index.index import AnnQueryIndex
 
 from .simple_tokenizer import tokenize
 
@@ -45,7 +45,7 @@ def query_index(
 ) -> AnnoyQueries:
     assert index_folder.exists()
     encoded_text = create_query_embeddings(cfg.load_model(), queries)
-    index = cfg.load_index()
+    index: AnnQueryIndex = cfg.load_index()
     index_paths = [
         index_folder / file
         for file in os.listdir(index_folder)
@@ -57,12 +57,13 @@ def query_index(
         index_id = int(path.stem)
         index.load(path)
         for q, qemb in zip(queries, encoded_text):
-            ann_imgs = index.query(q, qemb, cfg, index_id)
+            ann_imgs = index.query(q, qemb, index_id)
             ann_queries[q] += ann_imgs
         index.unload()
 
         if cur is not None:
             for ann_imgs in ann_queries.values():
+                # NOTE: This will only work with annoy images
                 add_image_path(cur, ann_imgs)
     return ann_queries
 

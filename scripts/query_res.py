@@ -8,9 +8,7 @@ from typing import Callable
 import torch
 
 from clip_index.imagenet import ImagenetDETDataset
-from clip_index.utils import AnnoyImage
-from clip_index.utils import create_index
-from clip_index.config import AnnoyQueryCfg
+from clip_index.annoy import AnnoyBuildIndex, AnnoyImage, AnnoyBuildCfg, AnnoyQueryCfg
 
 sys.path.append("..")
 
@@ -22,7 +20,7 @@ queries = [cls for cls in dataset._synset2desc.values()]
 image_dir = Path("/Volumes/T7/ILSVRC/Data/DET/val")
 image_paths = [image_dir / file for file in os.listdir(image_dir)]
 
-query_embeddings = torch.load("../assets/query_embeddings.pt")
+query_embeddings = torch.load("../assets/tensors/query_embeddings.pt")
 
 
 class IndexQueries(ABC):
@@ -36,6 +34,10 @@ class IndexQueries(ABC):
     @abstractmethod
     def update(self, ann_img: AnnoyImage):
         ...
+
+    def update_batch(self, ann_imgs: list[AnnoyImage]):
+        for ann_img in ann_imgs:
+            self.update(ann_img)
 
     def update_topn(self, topn: list[AnnoyImage], ann_img: AnnoyImage):
         if (len(topn) < 5 or ann_img.dist < topn[-1].dist) and ann_img not in topn:
@@ -73,7 +75,7 @@ class QuerywiseResult(IndexQueries):
         self.data: dict[str, list[AnnoyImage]] = {q: [] for q in queries}
 
     def update(self, ann_img: AnnoyImage):
-        cur_topn = self.data[ann_img.query]
+        cur_topn = self.data[ann_img.query]  # pyright: ignore
         self.update_topn(cur_topn, ann_img)
 
 
@@ -86,13 +88,13 @@ class ImagewiseResult(IndexQueries):
         self.data: list[list[AnnoyImage]] = [[] for _ in range(len(image_paths))]
 
     def update(self, ann_img: AnnoyImage):
-        cur_topn = self.data[ann_img.image_id]
+        cur_topn = self.data[ann_img.image_id]  # pyright: ignore
         self.update_topn(cur_topn, ann_img)
 
 
 def query_index(
     index_queries: IndexQueries,
-    index_paths: list[str],
+    index_paths: list[Path],
     index_size: int,
     cfg: AnnoyQueryCfg,
 ) -> IndexQueries:
@@ -100,39 +102,21 @@ def query_index(
     Queries indeses at index_paths and updates index_queries in-place
     Uses globals: queries, query_embeddings
     """
-    index = create_index()
+    index = cfg.load_index()
     # image: [AnnoyImage] (top 5)
     start_time = time.perf_counter()
     total_load_time = 0
     total_query_time = 0
     for path in index_paths:
-        index_id = int(Path(path).stem)
+        index_id = int(path.stem)
         start_load_time = time.perf_counter()
         index.load(path)
         total_load_time += time.perf_counter() - start_load_time
         for query, qemb in zip(queries, query_embeddings):
             start_query_time = time.perf_counter()
-            index_ref_ids, distances = index.get_nns_by_vector(
-                qemb,  # pyright: reportGeneralTypeIssues=false
-                cfg.max_results_per_query,
-                include_distances=True,
-                search_k=cfg.search_k,
-            )
+            ann_imgs = index.query(query, qemb, index_id)
             total_query_time += time.perf_counter() - start_query_time
-            for ref_id, dist in zip(index_ref_ids, distances):
-                image_id = index_id * index_size + ref_id
-                ann_img = AnnoyImage(
-                    query=query,
-                    ref_id=ref_id,
-                    index_id=index_id,
-                    dist=dist,
-                    image_id=image_id,
-                    image_path=image_paths[image_id],
-                )
-                # dataset.add_imagenet_classes_image(  # NOTE: I think this might be slow
-                #     ann_img
-                # )
-                index_queries.update(ann_img)
+            index_queries.update_batch(ann_imgs)
         index.unload()
     finish_time = time.perf_counter()
     total_epoch_time = finish_time - start_time
@@ -164,10 +148,10 @@ def evaluate_queries(
     print("Evaluating queries, max results per query:", cfg.max_results_per_query)
     result = {}
     for index_folder in index_folders:
-        print(f"Starting index size: {index_folder.stem}...")
+        print(f"Starting {index_folder.stem}...")
         index_size = int(index_folder.stem)
         index_paths = [
-            str(index_folder / file)
+            index_folder / file
             for file in os.listdir(index_folder)
             if file.endswith(".ann")
         ]

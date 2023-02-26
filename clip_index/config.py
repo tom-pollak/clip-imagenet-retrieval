@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 import inspect
 from dataclasses import dataclass
 from typing import Any, Callable
+import copy
 
 import torch
 
@@ -11,11 +12,7 @@ OPEN_CLIP_PREFIX = "openclip:"
 
 
 @dataclass
-class BaseCfg(metaclass=ABCMeta):
-    @abstractmethod
-    def load_model(self, device="cpu") -> Callable:
-        ...
-
+class IndexCfg(metaclass=ABCMeta):
     @abstractmethod
     def load_index(self) -> Any:  # -> index.AnnIndex (circular import)
         ...
@@ -26,16 +23,23 @@ class BaseCfg(metaclass=ABCMeta):
             **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
         )
 
+    def copy(self):
+        return copy.deepcopy(self)
+
 
 @dataclass
-class ModelCfg(BaseCfg, metaclass=ABCMeta):
+class ModelCfg(metaclass=ABCMeta):
     dimension: int = 512
     model_name: str = "motis"
     pretrained: str | None = None  # For open clip model
 
+    @abstractmethod
+    def load_model(self, device="cpu") -> Callable:
+        ...
+
 
 @dataclass
-class QueryCfg(ModelCfg, metaclass=ABCMeta):
+class QueryCfg(IndexCfg, ModelCfg, metaclass=ABCMeta):
     threshold: float = torch.inf  # Threshold distance for results
     max_results_per_query: int = 1000  # Seems to be the max
 
@@ -58,7 +62,7 @@ class QueryCfg(ModelCfg, metaclass=ABCMeta):
 
 
 @dataclass
-class BuildCfg(ModelCfg, metaclass=ABCMeta):
+class BuildCfg(IndexCfg, ModelCfg, metaclass=ABCMeta):
     index_size: int | None = None  # No limit, limits the upper bound of memory usage
     image_resolution: int = 224
 

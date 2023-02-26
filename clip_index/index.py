@@ -33,20 +33,12 @@ class AnnImage(ABC):
 AnnQueries: TypeAlias = dict[str, list[AnnImage]]
 
 
-class AnnIndex(ABC):
+class AnnQueryIndex(ABC):
     @abstractmethod
     def __init__(
         self,
-        cfg: config.BaseCfg,
+        cfg: config.QueryCfg,
     ):
-        ...
-
-    @abstractmethod
-    def add_items(self, tensors: list[torch.Tensor]):
-        ...
-
-    @abstractmethod
-    def build(self, path: Path, build_cfg: config.BuildCfg):
         ...
 
     @abstractmethod
@@ -54,15 +46,35 @@ class AnnIndex(ABC):
         self,
         query: str,
         qemb: torch.Tensor,
-        query_cfg: config.QueryCfg,
         index_id: int | None = None,
     ) -> list[AnnImage]:
+        ...
+
+    @abstractmethod
+    def load(self, path: Path):
         ...
 
     @abstractmethod
     def unload(self):
         ...
 
+
+class AnnBuildIndex(ABC):
     @abstractmethod
-    def load(self, path: Path):
+    def __init__(
+        self,
+        cfg: config.BuildCfg,
+    ):
+        ...
+
+    @abstractmethod
+    def add_items(self, tensors: torch.Tensor):
+        ...
+
+    @abstractmethod
+    def build(self):
+        ...
+
+    @abstractmethod
+    def set_build_path(self, path: Path):
         ...

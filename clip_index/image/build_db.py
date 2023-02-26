@@ -12,7 +12,8 @@ def insert_images_db(cur: sqlite3.Cursor, image_paths: list[str]):
         map(lambda path: Path(path).exists(), image_paths)
     ), f"not all paths in {image_paths} exist"
     cur.executemany(
-        "INSERT OR IGNORE INTO image (image_path) VALUES (?) ", map(tuple, image_paths)
+        "INSERT OR IGNORE INTO image (image_path) VALUES (?) ",
+        map(lambda x: (x,), image_paths),
     )
 
 

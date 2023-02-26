@@ -29,8 +29,8 @@ queries = [cls for cls in dataset._synset2desc.values()]
 
 
 # %%
-image_embeddings = torch.load("../assets/image_embeddings.pt")
-query_embeddings = torch.load("../assets/query_embeddings.pt")
+image_embeddings = torch.load("../assets/tensors/image_embeddings.pt")
+query_embeddings = torch.load("../assets/tensors/query_embeddings.pt")
 
 print(image_embeddings.shape, query_embeddings.shape)
 
@@ -87,48 +87,48 @@ print(f"Top 5 accuracy: {top_5_correct / nimgs:.3f}")
 # %%
 # Build indexes
 index_sizes = [16, 64, 128, 512, 1024, 4096, 8192, 20120]
-nimgs = len(image_paths)
+ntrees = [64, 256, 1024, 4096, 16384]
+
+bstats = {"Annoy": {"index_size": {}, "ntrees": {}}, "L2": {}}
 
 
 def build_indexes():
-    from clip_index.image.build_index import add_images_to_index
+    from clip_index.image.build import build_indexes_from_image_folder
+    from clip_index.annoy import AnnoyBuildCfg
+    import sqlite3
 
-    print(f"Building indexes...")
+    conn = sqlite3.connect("/Users/tom/projects/clip-index/assets/db/clip_image.db")
     for isize in index_sizes:
-        nindexes = math.ceil(nimgs / isize)
-        tot_index_add_time = 0
-        tot_build_time = 0
-        cpu_build_time = 0
-        for i in range(nindexes):
-            index = AnnoyIndex(512, "angular")
-            index.on_disk_build(f"/Volumes/T7/clip-indexes/motis/val/{isize}/{i}.ann")
+        print(f"Building index with index_size={isize}")
+        cfg = AnnoyBuildCfg(index_size=isize, ntrees=None)
+        bstat = build_indexes_from_image_folder(
+            image_dir=Path("/Volumes/T7/ILSVRC/Data/DET/val/"),
+            index_folder=Path(
+                f"/Volumes/T7/clip-indexes/motis/annoy/index_sizes/{isize}/"
+            ),
+            conn=conn,
+            cfg=cfg,
+            cache_image_embeddings=image_embeddings,
+        )
 
-            start_time = time.perf_counter()
-            add_images_to_index(index, image_embeddings[i * isize : (i + 1) * isize])
-            finish_add_items = time.perf_counter()
-            cpu_time_start_build = time.process_time()
-            index.build(index.f * 2)
-            finish_build = time.perf_counter()
-            cpu_time_finish = time.process_time()
+        bstats["Annoy"]["index_size"][isize] = bstat
+    print()
+    for nt in ntrees:
+        print(f"Building index with ntrees={nt}")
+        cfg = AnnoyBuildCfg(index_size=512, ntrees=nt)
+        bstat = build_indexes_from_image_folder(
+            image_dir=Path("/Volumes/T7/ILSVRC/Data/DET/val/"),
+            index_folder=Path(f"/Volumes/T7/clip-indexes/motis/annoy/ntrees/{nt}/"),
+            conn=conn,
+            cfg=cfg,
+            cache_image_embeddings=image_embeddings,
+        )
+        bstats["Annoy"]["ntrees"][nt] = bstat
 
-            tot_index_add_time += finish_add_items - start_time
-            tot_build_time += finish_build - finish_add_items
-            cpu_build_time += cpu_time_finish - cpu_time_start_build
-
-            index.unload()
-
-        log = f"""Built indexes of size {isize} ({nindexes} indexes)
-        Index add time: {tot_index_add_time:.5f}, {tot_index_add_time / nindexes:.5f} per index
-        Build time: {tot_build_time:.5f}, {tot_build_time / nindexes:.5f} per index
-        CPU build time: {cpu_build_time:.5f}, {cpu_build_time / nindexes:.5f} per index\n"""
-        print(log)
-        with open(
-            f"/Volumes/T7/clip-indexes/motis/val/{isize}/build_log.txt", "w"
-        ) as f:
-            f.write(log)
+    pickle.dump(bstats, open("../assets/pickles/build_stats.pkl", "wb"))
 
 
-# build_indexes() # You probably don't want to run this
+# build_indexes()
 
 # %%
 import os
@@ -144,36 +144,53 @@ from query_res import (
 
 from clip_index.annoy import AnnoyQueryCfg
 
-index_sizes = [16, 64, 128, 512, 1024, 4096, 8192, 20120]
 max_results = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
-index_folders = [
-    Path(f"/Volumes/T7/clip-indexes/motis/val/{isize}/") for isize in index_sizes
+index_size_index_folders = [
+    Path(f"/Volumes/T7/clip-indexes/motis/annoy/index_sizes/{isize}/")
+    for isize in index_sizes
+]
+
+ntrees_index_folders = [
+    Path(f"/Volumes/T7/clip-indexes/motis/annoy/ntrees/{nt}/") for nt in ntrees
 ]
 
 
 # %%
-print("Creating imagewise results...")
+print("Imagewise max results vs index size")
 max_results_res: dict[int, dict] = {}
 for max_result in max_results:
     res = evaluate_queries(
-        ImagewiseResult, index_folders, AnnoyQueryCfg(max_results_per_query=max_result)
+        ImagewiseResult,
+        index_size_index_folders,
+        AnnoyQueryCfg(max_results_per_query=max_result),
     )
     res_dict = result_to_dict(res)
     max_results_res[max_result] = res_dict
 
-max_results_path = Path("../assets/imagewise_ann_queries_max_results_all_indexes.pkl")
+max_results_path = Path("../assets/pickles/imagewise_max_results_index_size.pkl")
 pickle.dump(max_results_res, open(max_results_path, "wb"))
 print(f"Saved to {max_results_path}\n")
 
 # %%
-print("Creating querywise results...")
+print("Querywise max results=5 vs index size")
 res = evaluate_queries(
-    QuerywiseResult, index_folders, AnnoyQueryCfg(max_results_per_query=5)
+    QuerywiseResult, index_size_index_folders, AnnoyQueryCfg(max_results_per_query=5)
 )
 res_dict = result_to_dict(res)
 
-querywise_path = Path("../assets/querywise_ann_queries_top5.pkl")
-pickle.dump(res_dict, open(querywise_path, "wb"))
-print(f"Saved to {querywise_path}")
+index_size_path = Path("../assets/pickles/querywise_top5_index_size.pkl")
+pickle.dump(res_dict, open(index_size_path, "wb"))
+print(f"Saved to {index_size_path}")
+
+# %%
+print("Querywise max results=5 vs ntrees")
+res = evaluate_queries(
+    QuerywiseResult, ntrees_index_folders, AnnoyQueryCfg(max_results_per_query=5)
+)
+res_dict = result_to_dict(res)
+
+ntrees_path = Path("../assets/pickles/querywise_top5_ntrees.pkl")
+pickle.dump(res_dict, open(ntrees_path, "wb"))
+print(f"Saved to {ntrees_path}")
 
 # %%
