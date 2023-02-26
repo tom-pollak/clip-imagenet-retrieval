@@ -42,9 +42,9 @@ class BuildStats:
 
     def __repr__(self) -> str:
         return f"""Built indexes of size {self.index_size} ({self.nindexes} indexes)
-        Index add time: {self.tot_index_add_time:.5f}, {self.mean_add_time_per_item()} per image
-        Build time: {self.tot_build_time:.5f}, {self.mean_build_time_per_index()} per index
-        CPU build time: {self.cpu_build_time:.5f}, {self.mean_add_time_per_index()} per index\n"""
+        Index add time: {self.tot_index_add_time:.5f}, {self.mean_add_time_per_item():.5f} per image
+        Build time: {self.tot_build_time:.5f}, {self.mean_build_time_per_index():.5f} per index
+        CPU build time: {self.cpu_build_time:.5f}, {self.mean_add_time_per_index():.5f} per index\n"""
 
 
 def build_indexes_from_image_folder(
