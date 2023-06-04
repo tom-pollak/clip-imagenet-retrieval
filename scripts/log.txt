@@ -1,0 +1,137 @@
+torch.Size([20120, 512]) torch.Size([200, 512])
+Top 1 accuracy: 0.566
+Top 5 accuracy: 0.771
+Creating imagewise results...
+Evaluating queries, max results per query: 1000
+Starting index size: 16...
+        Index size 16 took 202.05664 seconds
+        Total load time: 51.97729 seconds, 0.04132 per index
+        Total query time: 146.11700580769684, 0.73059 per query
+
+Starting index size: 64...
+        Index size 64 took 100.13296 seconds
+        Total load time: 12.91023 seconds, 0.04098 per index
+        Total query time: 83.67674112541135, 0.41838 per query
+
+Starting index size: 128...
+        Index size 128 took 107.33041 seconds
+        Total load time: 6.22849 seconds, 0.03942 per index
+        Total query time: 97.53359263169114, 0.48767 per query
+
+Starting index size: 512...
+        Index size 512 took 109.36940 seconds
+        Total load time: 1.60522 seconds, 0.04013 per index
+        Total query time: 104.18801766342949, 0.52094 per query
+
+Starting index size: 1024...
+        Index size 1024 took 89.78365 seconds
+        Total load time: 0.39939 seconds, 0.01997 per index
+        Total query time: 85.04974536865484, 0.42525 per query
+
+Starting index size: 4096...
+        Index size 4096 took 34.94284 seconds
+        Total load time: 0.12282 seconds, 0.02456 per index
+        Total query time: 33.36823351099156, 0.16684 per query
+
+Starting index size: 8192...
+        Index size 8192 took 24.41288 seconds
+        Total load time: 0.05557 seconds, 0.01852 per index
+        Total query time: 23.39409342512954, 0.11697 per query
+
+Starting index size: 20120...
+        Index size 20120 took 12.75301 seconds
+        Total load time: 0.02083 seconds, 0.02083 per index
+        Total query time: 12.355181373190135, 0.06178 per query
+
+Saved at ../assets/imagewise_ann_queries_top5.pkl
+
+Creating querywise results...
+Evaluating queries, max results per query: 5
+Starting index size: 16...
+        Index size 16 took 189.34690 seconds
+        Total load time: 49.40060 seconds, 0.03927 per index
+        Total query time: 136.04430495784618, 0.68022 per query
+
+Starting index size: 64...
+        Index size 64 took 47.00312 seconds
+        Total load time: 12.09967 seconds, 0.03841 per index
+        Total query time: 34.52678943891078, 0.17263 per query
+
+Starting index size: 128...
+        Index size 128 took 24.74100 seconds
+        Total load time: 5.96527 seconds, 0.03775 per index
+        Total query time: 18.597258188878186, 0.09299 per query
+
+Starting index size: 512...
+        Index size 512 took 7.76556 seconds
+        Total load time: 1.55934 seconds, 0.03898 per index
+        Total query time: 6.162526729051024, 0.03081 per query
+
+Starting index size: 1024...
+        Index size 1024 took 8.47257 seconds
+        Total load time: 0.41380 seconds, 0.02069 per index
+        Total query time: 8.034336020471528, 0.04017 per query
+
+Starting index size: 4096...
+        Index size 4096 took 5.62543 seconds
+        Total load time: 0.10969 seconds, 0.02194 per index
+        Total query time: 5.507471105782315, 0.02754 per query
+
+Starting index size: 8192...
+        Index size 8192 took 4.93539 seconds
+        Total load time: 0.06238 seconds, 0.02079 per index
+        Total query time: 4.867575506563298, 0.02434 per query
+
+Starting index size: 20120...
+        Index size 20120 took 3.75128 seconds
+        Total load time: 0.01906 seconds, 0.01906 per index
+        Total query time: 3.7295087507227436, 0.01865 per query
+
+Saved to ../assets/querywise_ann_queries_top5.pkl
+
+Max results per query: 1
+        Index size 512 took 1.93790 seconds
+        Total load time: 0.01445 seconds, 0.01445 per index
+        Total query time: 1.9218805907294154, 0.00961 per query
+
+Max results per query: 5
+        Index size 512 took 0.61102 seconds
+        Total load time: 0.00015 seconds, 0.00015 per index
+        Total query time: 0.6079007842345163, 0.00304 per query
+
+Max results per query: 10
+        Index size 512 took 1.05527 seconds
+        Total load time: 0.00014 seconds, 0.00014 per index
+        Total query time: 1.0481414521345869, 0.00524 per query
+
+Max results per query: 20
+        Index size 512 took 1.17745 seconds
+        Total load time: 0.00017 seconds, 0.00017 per index
+        Total query time: 1.1697494621621445, 0.00585 per query
+
+Max results per query: 50
+        Index size 512 took 1.54773 seconds
+        Total load time: 0.00017 seconds, 0.00017 per index
+        Total query time: 1.5287720477208495, 0.00764 per query
+
+Max results per query: 100
+        Index size 512 took 1.91381 seconds
+        Total load time: 0.00015 seconds, 0.00015 per index
+        Total query time: 1.876586422440596, 0.00938 per query
+
+Max results per query: 200
+        Index size 512 took 2.65396 seconds
+        Total load time: 0.00019 seconds, 0.00019 per index
+        Total query time: 2.580823202384636, 0.01290 per query
+
+Max results per query: 500
+        Index size 512 took 5.02154 seconds
+        Total load time: 0.00015 seconds, 0.00015 per index
+        Total query time: 4.827745719696395, 0.02414 per query
+
+Max results per query: 1000
+        Index size 512 took 10.43864 seconds
+        Total load time: 0.00015 seconds, 0.00015 per index
+        Total query time: 8.469319909461774, 0.04235 per query
+
+Saved to ../assets/max_results_res.pkl

@@ -1,0 +1,418 @@
+torch.Size([20120, 512]) torch.Size([200, 512])
+Top 1 accuracy: 0.566
+Top 5 accuracy: 0.771
+Creating imagewise results...
+Evaluating queries, max results per query: 1
+Starting index size: 16...
+	Index size 16 took 225.84498 seconds
+	Total load time: 52.55651 seconds, 0.04178 per index
+	Total query time: 171.60657, 0.85803 per query
+
+Starting index size: 64...
+	Index size 64 took 57.99109 seconds
+	Total load time: 13.40839 seconds, 0.04257 per index
+	Total query time: 44.24339, 0.22122 per query
+
+Starting index size: 128...
+	Index size 128 took 30.75467 seconds
+	Total load time: 6.78870 seconds, 0.04297 per index
+	Total query time: 23.60545, 0.11803 per query
+
+Starting index size: 512...
+	Index size 512 took 10.13017 seconds
+	Total load time: 1.80602 seconds, 0.04515 per index
+	Total query time: 8.23592, 0.04118 per query
+
+Starting index size: 1024...
+	Index size 1024 took 11.12487 seconds
+	Total load time: 0.44270 seconds, 0.02213 per index
+	Total query time: 10.62660, 0.05313 per query
+
+Starting index size: 4096...
+	Index size 4096 took 6.14152 seconds
+	Total load time: 0.10148 seconds, 0.02030 per index
+	Total query time: 6.03097, 0.03015 per query
+
+Starting index size: 8192...
+	Index size 8192 took 5.19163 seconds
+	Total load time: 0.06777 seconds, 0.02259 per index
+	Total query time: 5.11755, 0.02559 per query
+
+Starting index size: 20120...
+	Index size 20120 took 3.39331 seconds
+	Total load time: 0.02068 seconds, 0.02068 per index
+	Total query time: 3.37004, 0.01685 per query
+
+Evaluating queries, max results per query: 5
+Starting index size: 16...
+	Index size 16 took 262.35873 seconds
+	Total load time: 54.38639 seconds, 0.04323 per index
+	Total query time: 204.59579, 1.02298 per query
+
+Starting index size: 64...
+	Index size 64 took 70.54114 seconds
+	Total load time: 13.72918 seconds, 0.04358 per index
+	Total query time: 55.91773, 0.27959 per query
+
+Starting index size: 128...
+	Index size 128 took 37.45639 seconds
+	Total load time: 6.76624 seconds, 0.04282 per index
+	Total query time: 30.19185, 0.15096 per query
+
+Starting index size: 512...
+	Index size 512 took 11.89649 seconds
+	Total load time: 1.90407 seconds, 0.04760 per index
+	Total query time: 9.84294, 0.04921 per query
+
+Starting index size: 1024...
+	Index size 1024 took 12.41475 seconds
+	Total load time: 0.47460 seconds, 0.02373 per index
+	Total query time: 11.84515, 0.05923 per query
+
+Starting index size: 4096...
+	Index size 4096 took 7.14282 seconds
+	Total load time: 0.10471 seconds, 0.02094 per index
+	Total query time: 7.01422, 0.03507 per query
+
+Starting index size: 8192...
+	Index size 8192 took 5.97744 seconds
+	Total load time: 0.06795 seconds, 0.02265 per index
+	Total query time: 5.89472, 0.02947 per query
+
+Starting index size: 20120...
+	Index size 20120 took 4.21223 seconds
+	Total load time: 0.02055 seconds, 0.02055 per index
+	Total query time: 4.18611, 0.02093 per query
+
+Evaluating queries, max results per query: 10
+Starting index size: 16...
+	Index size 16 took 313.92187 seconds
+	Total load time: 54.07225 seconds, 0.04298 per index
+	Total query time: 254.74053, 1.27370 per query
+
+Starting index size: 64...
+	Index size 64 took 84.14369 seconds
+	Total load time: 14.12544 seconds, 0.04484 per index
+	Total query time: 68.58670, 0.34293 per query
+
+Starting index size: 128...
+	Index size 128 took 45.12738 seconds
+	Total load time: 7.06119 seconds, 0.04469 per index
+	Total query time: 37.25926, 0.18630 per query
+
+Starting index size: 512...
+	Index size 512 took 14.73884 seconds
+	Total load time: 1.80286 seconds, 0.04507 per index
+	Total query time: 12.09561, 0.06048 per query
+
+Starting index size: 1024...
+	Index size 1024 took 13.17506 seconds
+	Total load time: 0.44422 seconds, 0.02221 per index
+	Total query time: 12.58750, 0.06294 per query
+
+Starting index size: 4096...
+	Index size 4096 took 7.57710 seconds
+	Total load time: 0.11478 seconds, 0.02296 per index
+	Total query time: 7.42162, 0.03711 per query
+
+Starting index size: 8192...
+	Index size 8192 took 6.45562 seconds
+	Total load time: 0.05820 seconds, 0.01940 per index
+	Total query time: 6.37290, 0.03186 per query
+
+Starting index size: 20120...
+	Index size 20120 took 4.68165 seconds
+	Total load time: 0.02875 seconds, 0.02875 per index
+	Total query time: 4.64457, 0.02322 per query
+
+Evaluating queries, max results per query: 20
+Starting index size: 16...
+	Index size 16 took 298.52573 seconds
+	Total load time: 53.26017 seconds, 0.04234 per index
+	Total query time: 238.70595, 1.19353 per query
+
+Starting index size: 64...
+	Index size 64 took 113.03423 seconds
+	Total load time: 13.65588 seconds, 0.04335 per index
+	Total query time: 95.75858, 0.47879 per query
+
+Starting index size: 128...
+	Index size 128 took 59.59079 seconds
+	Total load time: 6.97964 seconds, 0.04417 per index
+	Total query time: 51.26772, 0.25634 per query
+
+Starting index size: 512...
+	Index size 512 took 18.63123 seconds
+	Total load time: 1.79284 seconds, 0.04482 per index
+	Total query time: 16.42354, 0.08212 per query
+
+Starting index size: 1024...
+	Index size 1024 took 14.34009 seconds
+	Total load time: 0.44335 seconds, 0.02217 per index
+	Total query time: 13.64637, 0.06823 per query
+
+Starting index size: 4096...
+	Index size 4096 took 8.42644 seconds
+	Total load time: 0.10574 seconds, 0.02115 per index
+	Total query time: 8.24053, 0.04120 per query
+
+Starting index size: 8192...
+	Index size 8192 took 6.93528 seconds
+	Total load time: 0.07301 seconds, 0.02434 per index
+	Total query time: 6.81516, 0.03408 per query
+
+Starting index size: 20120...
+	Index size 20120 took 5.30151 seconds
+	Total load time: 0.02161 seconds, 0.02161 per index
+	Total query time: 5.26496, 0.02632 per query
+
+Evaluating queries, max results per query: 50
+Starting index size: 16...
+	Index size 16 took 299.21327 seconds
+	Total load time: 52.41812 seconds, 0.04167 per index
+	Total query time: 238.64885, 1.19324 per query
+
+Starting index size: 64...
+	Index size 64 took 191.25158 seconds
+	Total load time: 13.43797 seconds, 0.04266 per index
+	Total query time: 172.80575, 0.86403 per query
+
+Starting index size: 128...
+	Index size 128 took 101.95202 seconds
+	Total load time: 6.95689 seconds, 0.04403 per index
+	Total query time: 92.21919, 0.46110 per query
+
+Starting index size: 512...
+	Index size 512 took 30.52775 seconds
+	Total load time: 1.76884 seconds, 0.04422 per index
+	Total query time: 27.86128, 0.13931 per query
+
+Starting index size: 1024...
+	Index size 1024 took 18.87775 seconds
+	Total load time: 0.45733 seconds, 0.02287 per index
+	Total query time: 17.85943, 0.08930 per query
+
+Starting index size: 4096...
+	Index size 4096 took 10.20759 seconds
+	Total load time: 0.10957 seconds, 0.02191 per index
+	Total query time: 9.89460, 0.04947 per query
+
+Starting index size: 8192...
+	Index size 8192 took 8.43217 seconds
+	Total load time: 0.07305 seconds, 0.02435 per index
+	Total query time: 8.24220, 0.04121 per query
+
+Starting index size: 20120...
+	Index size 20120 took 5.87770 seconds
+	Total load time: 0.02210 seconds, 0.02210 per index
+	Total query time: 5.82184, 0.02911 per query
+
+Evaluating queries, max results per query: 100
+Starting index size: 16...
+	Index size 16 took 301.29395 seconds
+	Total load time: 53.39045 seconds, 0.04244 per index
+	Total query time: 238.99156, 1.19496 per query
+
+Starting index size: 64...
+	Index size 64 took 153.54290 seconds
+	Total load time: 13.43669 seconds, 0.04266 per index
+	Total query time: 133.97697, 0.66988 per query
+
+Starting index size: 128...
+	Index size 128 took 178.49810 seconds
+	Total load time: 6.68978 seconds, 0.04234 per index
+	Total query time: 166.75095, 0.83375 per query
+
+Starting index size: 512...
+	Index size 512 took 49.62018 seconds
+	Total load time: 1.62238 seconds, 0.04056 per index
+	Total query time: 46.34868, 0.23174 per query
+
+Starting index size: 1024...
+	Index size 1024 took 25.26740 seconds
+	Total load time: 0.48739 seconds, 0.02437 per index
+	Total query time: 23.74321, 0.11872 per query
+
+Starting index size: 4096...
+	Index size 4096 took 12.79409 seconds
+	Total load time: 0.13320 seconds, 0.02664 per index
+	Total query time: 12.24278, 0.06121 per query
+
+Starting index size: 8192...
+	Index size 8192 took 10.09548 seconds
+	Total load time: 0.06558 seconds, 0.02186 per index
+	Total query time: 9.80052, 0.04900 per query
+
+Starting index size: 20120...
+	Index size 20120 took 6.99176 seconds
+	Total load time: 0.01986 seconds, 0.01986 per index
+	Total query time: 6.90505, 0.03453 per query
+
+Evaluating queries, max results per query: 200
+Starting index size: 16...
+	Index size 16 took 304.17897 seconds
+	Total load time: 53.64339 seconds, 0.04264 per index
+	Total query time: 238.59997, 1.19300 per query
+
+Starting index size: 64...
+	Index size 64 took 155.55430 seconds
+	Total load time: 13.48635 seconds, 0.04281 per index
+	Total query time: 135.89591, 0.67948 per query
+
+Starting index size: 128...
+	Index size 128 took 167.96304 seconds
+	Total load time: 6.47563 seconds, 0.04098 per index
+	Total query time: 155.39861, 0.77699 per query
+
+Starting index size: 512...
+	Index size 512 took 87.74143 seconds
+	Total load time: 1.71756 seconds, 0.04294 per index
+	Total query time: 83.05079, 0.41525 per query
+
+Starting index size: 1024...
+	Index size 1024 took 37.46622 seconds
+	Total load time: 0.44659 seconds, 0.02233 per index
+	Total query time: 35.12609, 0.17563 per query
+
+Starting index size: 4096...
+	Index size 4096 took 17.03887 seconds
+	Total load time: 0.11155 seconds, 0.02231 per index
+	Total query time: 16.11181, 0.08056 per query
+
+Starting index size: 8192...
+	Index size 8192 took 13.08930 seconds
+	Total load time: 0.07413 seconds, 0.02471 per index
+	Total query time: 12.56125, 0.06281 per query
+
+Starting index size: 20120...
+	Index size 20120 took 8.16764 seconds
+	Total load time: 0.02611 seconds, 0.02611 per index
+	Total query time: 8.00286, 0.04001 per query
+
+Evaluating queries, max results per query: 500
+Starting index size: 16...
+	Index size 16 took 309.93261 seconds
+	Total load time: 52.74502 seconds, 0.04193 per index
+	Total query time: 243.06473, 1.21532 per query
+
+Starting index size: 64...
+	Index size 64 took 156.37002 seconds
+	Total load time: 13.54335 seconds, 0.04299 per index
+	Total query time: 136.69338, 0.68347 per query
+
+Starting index size: 128...
+	Index size 128 took 148.61714 seconds
+	Total load time: 6.28377 seconds, 0.03977 per index
+	Total query time: 136.82598, 0.68413 per query
+
+Starting index size: 512...
+	Index size 512 took 122.60048 seconds
+	Total load time: 1.54513 seconds, 0.03863 per index
+	Total query time: 117.05292, 0.58526 per query
+
+Starting index size: 1024...
+	Index size 1024 took 48.01241 seconds
+	Total load time: 0.45565 seconds, 0.02278 per index
+	Total query time: 45.19922, 0.22600 per query
+
+Starting index size: 4096...
+	Index size 4096 took 19.45311 seconds
+	Total load time: 0.08171 seconds, 0.01634 per index
+	Total query time: 18.37521, 0.09188 per query
+
+Starting index size: 8192...
+	Index size 8192 took 14.98860 seconds
+	Total load time: 0.07017 seconds, 0.02339 per index
+	Total query time: 14.27413, 0.07137 per query
+
+Starting index size: 20120...
+	Index size 20120 took 9.56991 seconds
+	Total load time: 0.01539 seconds, 0.01539 per index
+	Total query time: 9.32573, 0.04663 per query
+
+Evaluating queries, max results per query: 1000
+Starting index size: 16...
+	Index size 16 took 202.93210 seconds
+	Total load time: 52.42135 seconds, 0.04167 per index
+	Total query time: 146.48435, 0.73242 per query
+
+Starting index size: 64...
+	Index size 64 took 110.01137 seconds
+	Total load time: 13.06423 seconds, 0.04147 per index
+	Total query time: 84.74777, 0.42374 per query
+
+Starting index size: 128...
+	Index size 128 took 106.88150 seconds
+	Total load time: 6.30948 seconds, 0.03993 per index
+	Total query time: 96.86219, 0.48431 per query
+
+Starting index size: 512...
+	Index size 512 took 108.36074 seconds
+	Total load time: 1.65242 seconds, 0.04131 per index
+	Total query time: 102.75879, 0.51379 per query
+
+Starting index size: 1024...
+	Index size 1024 took 88.75843 seconds
+	Total load time: 0.43567 seconds, 0.02178 per index
+	Total query time: 84.10480, 0.42052 per query
+
+Starting index size: 4096...
+	Index size 4096 took 34.37281 seconds
+	Total load time: 0.11190 seconds, 0.02238 per index
+	Total query time: 32.49221, 0.16246 per query
+
+Starting index size: 8192...
+	Index size 8192 took 24.11791 seconds
+	Total load time: 0.06092 seconds, 0.02031 per index
+	Total query time: 22.90160, 0.11451 per query
+
+Starting index size: 20120...
+	Index size 20120 took 12.46970 seconds
+	Total load time: 0.01999 seconds, 0.01999 per index
+	Total query time: 11.97792, 0.05989 per query
+
+Saved to ../assets/imagewise_ann_queries_max_results_all_indexes.pkl
+
+Creating querywise results...
+Evaluating queries, max results per query: 5
+Starting index size: 16...
+	Index size 16 took 175.88832 seconds
+	Total load time: 49.22752 seconds, 0.03913 per index
+	Total query time: 125.18617, 0.62593 per query
+
+Starting index size: 64...
+	Index size 64 took 46.91300 seconds
+	Total load time: 12.22875 seconds, 0.03882 per index
+	Total query time: 34.31258, 0.17156 per query
+
+Starting index size: 128...
+	Index size 128 took 24.84147 seconds
+	Total load time: 5.81293 seconds, 0.03679 per index
+	Total query time: 18.82476, 0.09412 per query
+
+Starting index size: 512...
+	Index size 512 took 7.80526 seconds
+	Total load time: 1.54349 seconds, 0.03859 per index
+	Total query time: 6.20279, 0.03101 per query
+
+Starting index size: 1024...
+	Index size 1024 took 8.41615 seconds
+	Total load time: 0.40132 seconds, 0.02007 per index
+	Total query time: 7.97516, 0.03988 per query
+
+Starting index size: 4096...
+	Index size 4096 took 5.37414 seconds
+	Total load time: 0.09987 seconds, 0.01997 per index
+	Total query time: 5.25802, 0.02629 per query
+
+Starting index size: 8192...
+	Index size 8192 took 4.86523 seconds
+	Total load time: 0.06101 seconds, 0.02034 per index
+	Total query time: 4.79154, 0.02396 per query
+
+Starting index size: 20120...
+	Index size 20120 took 3.96726 seconds
+	Total load time: 0.01822 seconds, 0.01822 per index
+	Total query time: 3.94383, 0.01972 per query
+
+Saved to ../assets/querywise_ann_queries_top5.pkl
