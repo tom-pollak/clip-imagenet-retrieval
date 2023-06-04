@@ -1,0 +1,10 @@
+tensors/image_embeddings.pt filter=lfs diff=lfs merge=lfs -text
+tensors/query_embeddings.pt filter=lfs diff=lfs merge=lfs -text
+pickles/imagewise_ann_queries_top5.pkl filter=lfs diff=lfs merge=lfs -text
+pickles/imagewise_ann_queries_top5_repl.pkl filter=lfs diff=lfs merge=lfs -text
+pickles/max_results_res_512.pkl filter=lfs diff=lfs merge=lfs -text
+pickles/max_results_res_1024.pkl filter=lfs diff=lfs merge=lfs -text
+pickles/querywise_ann_queries_top5.pkl filter=lfs diff=lfs merge=lfs -text
+pickles/temp_512_rerun.pkl filter=lfs diff=lfs merge=lfs -text
+pickles/imagenet_data_querywise_512.pkl filter=lfs diff=lfs merge=lfs -text
+pickles/imagewise_ann_queries_max_results_all_indexes.pkl filter=lfs diff=lfs merge=lfs -text
